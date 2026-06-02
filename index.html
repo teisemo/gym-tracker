@@ -676,12 +676,22 @@ async function loadWorkouts(){
 }
 
 async function loadAllExercises(){
-  const {data,error}=await sb.from('exercises').select('*').order('position');
+  // Join workout_exercises con exercises (catalogo)
+  const {data,error}=await sb.from('workout_exercises')
+    .select('id,workout_id,exercise_id,position,tempo,range_rip,exercises(id,nome)')
+    .order('position');
   if(error){ console.error('loadExercises',error); return; }
   exercises={};
-  (data||[]).forEach(ex=>{
-    if(!exercises[ex.workout_id]) exercises[ex.workout_id]=[];
-    exercises[ex.workout_id].push(ex);
+  (data||[]).forEach(we=>{
+    if(!exercises[we.workout_id]) exercises[we.workout_id]=[];
+    exercises[we.workout_id].push({
+      we_id: we.id,                    // id della riga workout_exercises
+      exercise_id: we.exercise_id,     // id stabile dell'esercizio nel catalogo
+      nome: we.exercises?.nome || '?',
+      tempo: we.tempo,
+      range_rip: we.range_rip,
+      position: we.position
+    });
   });
 }
 
@@ -832,8 +842,9 @@ async function initHome(){
         const exList=getWorkoutExercises(wid);
         let exRows='';
         exList.forEach((ex,ei)=>{
-          const s2=(sd[ei]||{})[2]||{};
-          const s3=(sd[ei]||{})[3]||{};
+          const ek=ex.exercise_id;
+          const s2=(sd[ek]||{})[2]||{};
+          const s3=(sd[ek]||{})[3]||{};
           const fmt=s=>s.kg?`${s.kg}×${s.rip||'?'}r`:'—';
           exRows+=`<div class="hl-row"><span>${ex.nome}</span><span>${fmt(s2)}</span><span>${fmt(s3)}</span></div>`;
         });
@@ -947,15 +958,9 @@ function renderEx(sd){
     document.getElementById('ex-cont').innerHTML='<div class="empty">Nessun esercizio in questa scheda — aggiungili in Impostazioni → Esercizi</div>';
     return;
   }
-  let h=`<div class="ex-block">
-    <div class="col-hdrs">
-      <div class="col-h" style="text-align:left">Serie</div>
-      <div class="col-h">Kg</div><div class="col-h">Rip</div><div class="col-h"></div>
-    </div>`;
-  // Each exercise as a section
-  document.getElementById('ex-cont').innerHTML=''; // clear first
   let fullHtml='';
   exList.forEach((ex,ei)=>{
+    const exKey=ex.exercise_id;   // chiave stabile nel series_data
     fullHtml+=`<div class="ex-block">
       <div class="ex-hdr">
         <span class="ex-name">${ex.nome}</span>
@@ -967,11 +972,11 @@ function renderEx(sd){
         <div class="col-h">Kg</div><div class="col-h">Rip</div><div class="col-h"></div>
       </div>`;
     SERIE_DEFS.forEach((s,si)=>{
-      const sv=(sd[ei]||{})[si]||{};
+      const sv=(sd[exKey]||{})[si]||{};
       const isDone=!!sv.done;
       let prevKg='',prevRip='',upgradeHint=false;
       if(s.training){
-        const pv=(prevSd[ei]||{})[si]||{};
+        const pv=(prevSd[exKey]||{})[si]||{};
         prevKg=pv.kg||''; prevRip=pv.rip||'';
         if(parseInt(prevRip)>=10) upgradeHint=true;
       }
@@ -1016,13 +1021,14 @@ function togDone(ei,si){
 function collectData(){
   const d={};
   const exList=getWorkoutExercises(curWorkout?.id);
-  exList.forEach((_,ei)=>{
-    d[ei]={};
+  exList.forEach((ex,ei)=>{
+    const exKey=ex.exercise_id;   // salva per exercise_id, non per posizione
+    d[exKey]={};
     SERIE_DEFS.forEach((_,si)=>{
       const kg=document.getElementById(`kg_${ei}_${si}`);
       const rp=document.getElementById(`rp_${ei}_${si}`);
       const cb=document.getElementById(`cb_${ei}_${si}`);
-      d[ei][si]={kg:kg?kg.value:'',rip:rp?rp.value:'',done:cb?cb.classList.contains('done'):false};
+      d[exKey][si]={kg:kg?kg.value:'',rip:rp?rp.value:'',done:cb?cb.classList.contains('done'):false};
     });
   });
   return d;
@@ -1110,8 +1116,9 @@ async function loadHistory(){
       const exList=getWorkoutExercises(s.workout_id);
       let exRows='';
       exList.forEach((ex,ei)=>{
-        const s2=(sd[ei]||{})[2]||{};
-        const s3=(sd[ei]||{})[3]||{};
+        const ek=ex.exercise_id;
+        const s2=(sd[ek]||{})[2]||{};
+        const s3=(sd[ek]||{})[3]||{};
         const fmt=sr=>sr.kg?`${sr.kg}kg×${sr.rip||'?'}r`:'—';
         exRows+=`<div class="ex-sum-r"><span>${ex.nome}</span><span>${fmt(s2)}</span><span>${fmt(s3)}</span></div>`;
       });
@@ -1160,8 +1167,9 @@ function renderCompare(){
   const fmt=d=>d?new Date(d+'T12:00:00').toLocaleDateString('it-IT',{day:'numeric',month:'short'}):'-';
   let h=`<div class="cmp-head"><span>Esercizio</span><span>${A.user} · ${fmt(A.date)}</span><span>${B.user} · ${fmt(B.date)}</span></div>`;
   exList.forEach((ex,ei)=>{
-    const kgA=parseFloat((A.sd?.[ei]?.[2]?.kg)||0)||0;
-    const kgB=parseFloat((B.sd?.[ei]?.[2]?.kg)||0)||0;
+    const ek=ex.exercise_id;
+    const kgA=parseFloat((A.sd?.[ek]?.[2]?.kg)||0)||0;
+    const kgB=parseFloat((B.sd?.[ek]?.[2]?.kg)||0)||0;
     const diff=kgA-kgB;
     let cls='c-eq',sym='=';
     if(diff>0){cls='c-up';sym=`+${diff.toFixed(1)}`;}
@@ -1197,7 +1205,8 @@ async function loadStats(){
       const ath=sess.athletes;
       const uname=ath?athleteFullName(ath):'?';
       exList.forEach((ex,ei)=>{
-        const s2=(sd[ei]||{})[2]||{};
+        const ek=ex.exercise_id;
+        const s2=(sd[ek]||{})[2]||{};
         if(!s2.kg) return;
         const kg=parseFloat(s2.kg)||0;
         const rip=parseInt(s2.rip)||0;
@@ -1385,19 +1394,46 @@ function markDirty(wid,ei){
 
 async function saveExercise(wid,ei){
   const ex=(exercises[wid]||[])[ei];
-  if(!ex?.id) return;
+  if(!ex?.we_id) return;
   const nome=document.getElementById(`exn_${wid}_${ei}`).value.trim().toUpperCase();
   const tempo=document.getElementById(`ext_${wid}_${ei}`).value.trim();
   const range=document.getElementById(`exr_${wid}_${ei}`).value.trim();
   if(!nome) return;
   const btn=document.getElementById(`exbtn_${wid}_${ei}`);
   btn.textContent='…'; btn.style.opacity='.5';
-  const {error}=await sb.from('exercises').update({nome,tempo,range_rip:range,updated_at:new Date().toISOString()}).eq('id',ex.id);
-  if(error){ btn.textContent='⚠'; btn.style.opacity='1'; alert('Errore: '+error.message); return; }
-  if(!exercises[wid]) exercises[wid]=[];
-  exercises[wid][ei]={...exercises[wid][ei],nome,tempo,range_rip:range};
-  btn.textContent='✓'; btn.classList.add('saved'); btn.style.opacity='1';
-  setTimeout(()=>{ btn.textContent='💾'; btn.classList.remove('saved'); },2000);
+  try{
+    // 1. Aggiorna il nome nel catalogo (exercises) — se cambiato
+    if(nome!==ex.nome){
+      // Cerca se esiste già un esercizio con questo nome
+      const {data:existing}=await sb.from('exercises').select('id').eq('nome',nome).maybeSingle();
+      if(existing && existing.id!==ex.exercise_id){
+        // Esiste già: collega questa riga all'esercizio esistente
+        await sb.from('workout_exercises').update({exercise_id:existing.id}).eq('id',ex.we_id);
+        ex.exercise_id=existing.id;
+      } else {
+        // Rinomina l'esercizio nel catalogo (aggiorna ovunque sia usato)
+        await sb.from('exercises').update({nome}).eq('id',ex.exercise_id);
+      }
+    }
+    // 2. Aggiorna tempo/range nel collegamento (workout_exercises)
+    const {error}=await sb.from('workout_exercises')
+      .update({tempo,range_rip:range}).eq('id',ex.we_id);
+    if(error) throw error;
+    exercises[wid][ei]={...ex,nome,tempo,range_rip:range};
+    btn.textContent='✓'; btn.classList.add('saved'); btn.style.opacity='1';
+    setTimeout(()=>{ btn.textContent='💾'; btn.classList.remove('saved'); },2000);
+  } catch(e){
+    btn.textContent='⚠'; btn.style.opacity='1'; alert('Errore: '+e.message);
+  }
+}
+
+// Trova o crea un esercizio nel catalogo, ritorna il suo id
+async function getOrCreateExercise(nome){
+  const {data:existing}=await sb.from('exercises').select('id').eq('nome',nome).maybeSingle();
+  if(existing) return existing.id;
+  const {data,error}=await sb.from('exercises').insert({nome}).select('id').single();
+  if(error) throw error;
+  return data.id;
 }
 
 async function addExercise(wid){
@@ -1406,27 +1442,31 @@ async function addExercise(wid){
   const tempo=document.getElementById(`new-ex-tempo-${wid}`).value.trim()||'3111';
   const range=document.getElementById(`new-ex-range-${wid}`).value.trim()||'6-10';
   if(!nome){ nomeEl.focus(); return; }
-  const pos=(exercises[wid]||[]).length+1000+Date.now()%1000;
-  const {data,error}=await sb.from('exercises')
-    .insert({workout_id:wid,position:pos,nome,tempo,range_rip:range}).select().single();
-  if(error){ alert('Errore: '+error.message); return; }
-  if(!exercises[wid]) exercises[wid]=[];
-  exercises[wid].push(data);
-  await renumberPositions(wid);
-  nomeEl.value='';
-  document.getElementById(`new-ex-tempo-${wid}`).value='3111';
-  document.getElementById(`new-ex-range-${wid}`).value='6-10';
-  renderExerciseEditor();
+  try{
+    const exId=await getOrCreateExercise(nome);
+    // Controlla che non sia già in questa scheda
+    const dup=(exercises[wid]||[]).find(e=>e.exercise_id===exId);
+    if(dup){ alert('Questo esercizio è già presente in questa scheda.'); return; }
+    const pos=(exercises[wid]||[]).length+1000+Date.now()%1000;
+    const {error}=await sb.from('workout_exercises')
+      .insert({workout_id:wid,exercise_id:exId,position:pos,tempo,range_rip:range});
+    if(error) throw error;
+    nomeEl.value='';
+    document.getElementById(`new-ex-tempo-${wid}`).value='3111';
+    document.getElementById(`new-ex-range-${wid}`).value='6-10';
+    await loadAllExercises();
+    await renumberPositions(wid);
+    renderExerciseEditor();
+  } catch(e){ alert('Errore: '+e.message); }
 }
 
 async function deleteExercise(wid,ei){
   const ex=(exercises[wid]||[])[ei];
-  if(!ex?.id) return;
-  if(!confirm(`Eliminare "${ex.nome}"?\nI dati già salvati nelle sessioni non vengono modificati.`)) return;
-  const {error}=await sb.from('exercises').delete().eq('id',ex.id);
-  if(error){ alert('Errore eliminazione: '+error.message); return; }
-  const {data:check}=await sb.from('exercises').select('id').eq('id',ex.id).maybeSingle();
-  if(check){ alert('Errore: record ancora nel DB. Verifica le policy RLS su Supabase.'); return; }
+  if(!ex?.we_id) return;
+  if(!confirm(`Rimuovere "${ex.nome}" da questa scheda?\nLo storico delle sessioni rimane intatto.`)) return;
+  // Rimuove solo il collegamento (workout_exercises), non l'esercizio dal catalogo
+  const {error}=await sb.from('workout_exercises').delete().eq('id',ex.we_id);
+  if(error){ alert('Errore: '+error.message); return; }
   exercises[wid].splice(ei,1);
   await renumberPositions(wid);
   await loadAllExercises();
@@ -1435,8 +1475,9 @@ async function deleteExercise(wid,ei){
 
 async function renumberPositions(wid){
   const list=exercises[wid]||[];
-  await Promise.all(list.map((e,i)=>sb.from('exercises').update({position:-(i+1)}).eq('id',e.id)));
-  await Promise.all(list.map((e,i)=>sb.from('exercises').update({position:i}).eq('id',e.id)));
+  // Rinumera le posizioni in workout_exercises (usa we_id)
+  await Promise.all(list.map((e,i)=>sb.from('workout_exercises').update({position:-(i+1)}).eq('id',e.we_id)));
+  await Promise.all(list.map((e,i)=>sb.from('workout_exercises').update({position:i}).eq('id',e.we_id)));
   list.forEach((e,i)=>{ e.position=i; });
 }
 
