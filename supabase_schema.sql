@@ -61,6 +61,7 @@ insert into public.workouts (nome, short, position) values
 create table if not exists public.exercises (
   id serial primary key,
   nome text not null unique,
+  gruppo_muscolare text,
   created_at timestamptz default now()
 );
 alter table public.exercises enable row level security;
@@ -71,10 +72,13 @@ create policy "exercises_delete" on public.exercises for delete to authenticated
 grant select, insert, update, delete on public.exercises to authenticated;
 grant usage, select on sequence public.exercises_id_seq to authenticated;
 
-insert into public.exercises (nome) values
-  ('LEG EXTENSIONS'),('LEG CURL'),('PANCA PIANA'),('LAT MACHINE'),('HAMMER CURL'),
-  ('STACCO DA TERRA'),('TRAZIONI ALLA SBARRA'),('PARALLELE'),('SPINTE PER LE SPALLE'),('CURL AL CAVO'),
-  ('SQUAT'),('REMATORE'),('CROCI SU PANCA INCLINATA'),('ALZATE LATERALI'),('SPINTE IN BASSO BARRA')
+insert into public.exercises (nome, gruppo_muscolare) values
+  ('LEG EXTENSIONS','QUADRICIPITI'),('LEG CURL','FEMORALI'),('PANCA PIANA','PETTORALI'),
+  ('LAT MACHINE','DORSALI'),('HAMMER CURL','BICIPITI'),
+  ('STACCO DA TERRA','FEMORALI'),('TRAZIONI ALLA SBARRA','DORSALI'),('PARALLELE','PETTORALI'),
+  ('SPINTE PER LE SPALLE','DELTOIDI'),('CURL AL CAVO','BICIPITI'),
+  ('SQUAT','QUADRICIPITI'),('REMATORE','UPPER BACK'),('CROCI SU PANCA INCLINATA','PETTORALI'),
+  ('ALZATE LATERALI','DELTOIDI'),('SPINTE IN BASSO BARRA','TRICIPITI')
 on conflict (nome) do nothing;
 
 -- ── WORKOUT_EXERCISES (collegamento scheda ↔ esercizio) ───

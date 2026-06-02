@@ -316,6 +316,67 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 .home-wkt-card:hover{border-color:var(--accent);transform:translateY(-1px)}
 .home-wkt-card.done{border-color:var(--green-dim);background:var(--green-dim)}
 .home-wkt-card.done:hover{border-color:var(--green)}
+
+/* ── EXERCISES CATALOG (grouped) ── */
+.muscle-group{margin-bottom:20px}
+.muscle-group-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;padding:0 4px}
+.muscle-group-title{font-family:var(--fh);font-size:1.1rem;letter-spacing:1px;color:var(--accent)}
+.muscle-group-count{font-size:.72rem;color:var(--text3)}
+.cat-ex-row{display:grid;grid-template-columns:1fr 36px;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;overflow:hidden}
+.cat-ex-row:hover{border-color:var(--border2)}
+.cat-ex-name{padding:11px 14px;font-size:.88rem;font-weight:500;border:none;background:transparent;color:var(--text);outline:none;width:100%}
+.cat-ex-name:focus{background:rgba(212,244,66,.05)}
+.cat-ex-del{border:none;border-left:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;height:100%;transition:all .15s}
+.cat-ex-del:hover{background:var(--red-dim);color:var(--red)}
+
+/* Autocomplete */
+.ac-wrap{position:relative;flex:1;min-width:140px}
+.ac-list{position:absolute;top:100%;left:0;right:0;z-index:50;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;margin-top:4px;max-height:200px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4);display:none}
+.ac-list.open{display:block}
+.ac-item{padding:8px 12px;font-size:.85rem;cursor:pointer;color:var(--text2);border-bottom:1px solid var(--border)}
+.ac-item:last-child{border-bottom:none}
+.ac-item:hover,.ac-item.sel{background:var(--accent-dim);color:var(--accent)}
+.ac-item .ac-new{font-size:.72rem;color:var(--text3);margin-left:6px}
+
+/* ── WORKOUT DETAIL (drag&drop) ── */
+.wd-ex-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.wd-ex-row{display:grid;grid-template-columns:32px 1fr 70px 70px 34px;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all .15s}
+.wd-ex-row.dragging{opacity:.4;border-color:var(--accent)}
+.wd-ex-row.drag-over{border-color:var(--accent);border-style:dashed}
+.wd-drag-handle{display:flex;align-items:center;justify-content:center;padding:12px 6px;color:var(--text3);cursor:grab;touch-action:none}
+.wd-drag-handle:active{cursor:grabbing}
+.wd-ex-info{padding:10px 12px;min-width:0}
+.wd-ex-name{font-size:.88rem;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wd-ex-muscle{font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:.3px;margin-top:1px}
+.wd-ex-inp{border:none;border-left:1px solid var(--border);background:transparent;color:var(--text2);font-family:var(--fm);font-size:.8rem;padding:10px 6px;text-align:center;outline:none;width:100%}
+.wd-ex-inp:focus{background:rgba(212,244,66,.05);color:var(--text)}
+.wd-ex-del{border:none;border-left:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;height:100%;transition:all .15s}
+.wd-ex-del:hover{background:var(--red-dim);color:var(--red)}
+.wd-add-box{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:8px}
+.wd-add-title{font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:10px}
+.wd-add-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* Workout list cards */
+.wkt-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:0;overflow:hidden;margin-bottom:10px;transition:border-color .15s}
+.wkt-card-main{display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer}
+.wkt-card-main:hover{background:var(--bg3)}
+.wkt-card-badge{font-family:var(--fh);font-size:1.1rem;letter-spacing:1px;color:var(--accent);background:var(--accent-dim);padding:3px 12px;border-radius:6px}
+.wkt-card-info{flex:1;min-width:0}
+.wkt-card-name{font-size:.95rem;font-weight:600;color:var(--text)}
+.wkt-card-sub{font-size:.75rem;color:var(--text3);margin-top:2px}
+.wkt-card-arrow{color:var(--text3);font-size:1.2rem}
+
+/* Allenamento page: active toggle + drag */
+.tr-wkt-row{display:grid;grid-template-columns:32px 40px 1fr auto;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:8px;transition:all .15s}
+.tr-wkt-row.inactive{opacity:.5}
+.tr-wkt-row.dragging{opacity:.4;border-color:var(--accent)}
+.tr-wkt-row.drag-over{border-color:var(--accent);border-style:dashed}
+.tr-toggle{position:relative;width:38px;height:22px;border-radius:99px;background:var(--border2);cursor:pointer;transition:background .2s;border:none;margin:0 8px}
+.tr-toggle.on{background:var(--accent)}
+.tr-toggle::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s}
+.tr-toggle.on::after{transform:translateX(16px)}
+.tr-wkt-name{padding:12px 4px;font-size:.9rem;font-weight:500}
+.tr-wkt-badge{font-family:var(--fh);font-size:.95rem;letter-spacing:1px;color:var(--accent);padding:0 14px}
 </style>
 
 </head>
@@ -383,6 +444,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
     <div class="nsl" style="margin-top:auto">Impostazioni</div>
     <a href="#" class="nav-item" onclick="showPage('athletes',this)">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Atleti
+    </a>
+    <a href="#" class="nav-item" onclick="showPage('training',this)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.5 6.5h11v11h-11z" opacity=".3"/><path d="M4 9v6M20 9v6M2 11v2M22 11v2M7 7h10v10H7z"/></svg>Allenamento
     </a>
     <a href="#" class="nav-item" onclick="showPage('workouts-mgr',this)">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>Schede
@@ -484,8 +548,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
 
     <!-- GESTIONE SCHEDE -->
     <div id="page-workouts-mgr" class="page">
-      <div class="page-hdr"><div><h1 class="page-title">Schede</h1><p class="page-sub">Aggiungi, rinomina o elimina le tabelle di allenamento</p></div></div>
-      <div class="ath-mgr" id="workouts-mgr-list"><div class="spinner-lg"></div></div>
+      <div class="page-hdr"><div><h1 class="page-title">Schede</h1><p class="page-sub">Clicca una scheda per modificarne gli esercizi</p></div></div>
+      <div id="workouts-mgr-list"><div class="spinner-lg"></div></div>
       <div class="ath-add-row" style="margin-top:16px">
         <input type="text" id="new-wkt-nome" placeholder="Nome scheda (es. Gambe)" maxlength="40">
         <input type="text" id="new-wkt-short" placeholder="Etichetta (es. A4)" maxlength="6">
@@ -496,10 +560,44 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100
       </div>
     </div>
 
-    <!-- GESTIONE ESERCIZI -->
+    <!-- DETTAGLIO SCHEDA (esercizi della scheda) -->
+    <div id="page-workout-detail" class="page">
+      <div class="page-hdr">
+        <div><h1 class="page-title" id="wd-title">—</h1><p class="page-sub" id="wd-sub">—</p></div>
+        <button class="btn btn-ghost btn-sm" onclick="showPage('workouts-mgr',document.querySelector('.nav-item[onclick*=workouts-mgr]'))">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          Torna alle schede
+        </button>
+      </div>
+      <div id="wd-body"><div class="spinner-lg"></div></div>
+    </div>
+
+    <!-- ALLENAMENTO (schede attive + ordine) -->
+    <div id="page-training" class="page">
+      <div class="page-hdr"><div><h1 class="page-title">Allenamento</h1><p class="page-sub">Attiva le schede e ordinale — solo quelle attive appaiono nella home</p></div></div>
+      <div id="training-list"><div class="spinner-lg"></div></div>
+    </div>
+
+    <!-- GESTIONE ESERCIZI (catalogo) -->
     <div id="page-exercises" class="page">
-      <div class="page-hdr"><div><h1 class="page-title">Esercizi</h1><p class="page-sub">Modifica gli esercizi per ogni scheda</p></div></div>
-      <div class="ex-editor" id="ex-editor"><div class="spinner-lg"></div></div>
+      <div class="page-hdr"><div><h1 class="page-title">Esercizi</h1><p class="page-sub">Catalogo esercizi raggruppati per gruppo muscolare</p></div></div>
+      <div id="ex-catalog"><div class="spinner-lg"></div></div>
+      <div class="wd-add-box" style="margin-top:16px">
+        <div class="wd-add-title">Aggiungi esercizio al catalogo</div>
+        <div class="wd-add-row">
+          <input type="text" id="new-cat-nome" placeholder="Nome esercizio" maxlength="60" style="flex:2;min-width:160px;padding:9px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--fb);font-size:.88rem;outline:none">
+          <div class="ac-wrap">
+            <input type="text" id="new-cat-muscle" placeholder="Gruppo muscolare" maxlength="40" autocomplete="off"
+              oninput="acMuscle(this.value,'new-cat')" onfocus="acMuscle(this.value,'new-cat')"
+              style="width:100%;padding:9px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--fb);font-size:.88rem;outline:none">
+            <div class="ac-list" id="ac-new-cat"></div>
+          </div>
+          <button class="btn btn-accent btn-sm" onclick="addCatalogExercise()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Aggiungi
+          </button>
+        </div>
+      </div>
     </div>
 
   </main>
@@ -556,7 +654,10 @@ const SERIE_DEFS = [
 // ── STATE ─────────────────────────────────────────────────
 let sb, curUser=null;
 let workouts=[];      // [{id,nome,short,position}] sorted by position
-let exercises={};     // {workout_id: [{id,nome,tempo,range_rip,position}]}
+let exercises={};     // {workout_id: [{we_id,exercise_id,nome,tempo,range_rip,position,muscle}]}
+let catalog=[];       // [{id,nome,gruppo_muscolare}] catalogo completo esercizi
+let muscleGroups=[];  // lista gruppi muscolari distinti
+let curWorkoutDetail=null; // scheda aperta nel dettaglio
 let athletes=[];
 let curWorkout=null;  // workout selezionato nel tracker
 let curAthlete=null;
@@ -654,7 +755,7 @@ async function boot(user){
   document.getElementById('home-date').textContent =
     new Date().toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
-  await Promise.all([loadWorkouts(), loadAthletes()]);
+  await Promise.all([loadWorkouts(), loadAthletes(), loadCatalog()]);
   await loadAllExercises();
   populateFilters();
   showScreen('app-screen');
@@ -669,25 +770,44 @@ async function upsertProfile(id,email,name){
 }
 
 // ── DATA LOADING ──────────────────────────────────────────
+let allWorkouts=[];  // tutte le schede incluse inattive
 async function loadWorkouts(){
+  // Carica TUTTE le schede, poi separa attive
+  const {data,error}=await sb.from('workouts').select('*').order('position').order('id');
+  if(error){ console.error('loadWorkouts',error); return; }
+  allWorkouts=data||[];
+  workouts=(data||[]).filter(w=>w.active);
+  return;
+}
+async function _loadWorkouts_unused(){
   const {data,error}=await sb.from('workouts').select('*').eq('active',true).order('position').order('id');
   if(error){ console.error('loadWorkouts',error); return; }
   workouts=data||[];
 }
 
+async function loadCatalog(){
+  const {data,error}=await sb.from('exercises')
+    .select('id,nome,gruppo_muscolare').order('gruppo_muscolare').order('nome');
+  if(error){ console.error('loadCatalog',error); return; }
+  catalog=data||[];
+  // Gruppi muscolari distinti (ordine alfabetico, escludendo null)
+  muscleGroups=[...new Set(catalog.map(e=>e.gruppo_muscolare).filter(Boolean))].sort();
+}
+
 async function loadAllExercises(){
   // Join workout_exercises con exercises (catalogo)
   const {data,error}=await sb.from('workout_exercises')
-    .select('id,workout_id,exercise_id,position,tempo,range_rip,exercises(id,nome)')
+    .select('id,workout_id,exercise_id,position,tempo,range_rip,exercises(id,nome,gruppo_muscolare)')
     .order('position');
   if(error){ console.error('loadExercises',error); return; }
   exercises={};
   (data||[]).forEach(we=>{
     if(!exercises[we.workout_id]) exercises[we.workout_id]=[];
     exercises[we.workout_id].push({
-      we_id: we.id,                    // id della riga workout_exercises
-      exercise_id: we.exercise_id,     // id stabile dell'esercizio nel catalogo
+      we_id: we.id,
+      exercise_id: we.exercise_id,
       nome: we.exercises?.nome || '?',
+      muscle: we.exercises?.gruppo_muscolare || '',
       tempo: we.tempo,
       range_rip: we.range_rip,
       position: we.position
@@ -747,14 +867,11 @@ function showPage(id,el){
   if(id==='home')        { loadWorkouts().then(()=>{ loadAllExercises().then(()=>{ populateFilters(); initHome(); }); }); }
   if(id==='history')     { populateFilters(); loadHistory(); }
   if(id==='stats')       { populateFilters(); loadStats(); }
-  if(id==='exercises')   reloadAndRenderExercises();
+  if(id==='exercises')   renderCatalog();
   if(id==='athletes')    renderAthletePage();
   if(id==='workouts-mgr') renderWorkoutsMgr();
-}
-async function reloadAndRenderExercises(){
-  await loadWorkouts();
-  await loadAllExercises();
-  renderExerciseEditor();
+  if(id==='training')    renderTraining();
+  // page-workout-detail viene aperta solo da openWorkoutDetail()
 }
 function goHome(){
   showTimerFab(false);
@@ -1253,30 +1370,6 @@ async function loadStats(){
 }
 
 // ── GESTIONE SCHEDE ───────────────────────────────────────
-async function renderWorkoutsMgr(){
-  const el=document.getElementById('workouts-mgr-list');
-  await loadWorkouts();
-  if(!workouts.length){ el.innerHTML='<div class="empty">Nessuna scheda — aggiungine una sotto</div>'; return; }
-  el.innerHTML=workouts.map((w,i)=>`
-    <div class="ath-row" id="wkt-row-${w.id}">
-      <div class="ath-drag">${i+1}</div>
-      <input class="ath-inp" id="wkt-nome-${w.id}" value="${w.nome}" placeholder="Nome scheda" onchange="saveWorkout(${w.id})">
-      <input class="ath-inp" id="wkt-short-${w.id}" value="${w.short||''}" placeholder="Etichetta (A1)" maxlength="6" onchange="saveWorkout(${w.id})" style="max-width:100px">
-      <button class="ath-del" onclick="deleteWorkout(${w.id})" title="Elimina">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-      </button>
-    </div>
-  `).join('');
-}
-
-async function saveWorkout(id){
-  const nome=document.getElementById(`wkt-nome-${id}`)?.value.trim();
-  const short=document.getElementById(`wkt-short-${id}`)?.value.trim()||'';
-  if(!nome) return;
-  await sb.from('workouts').update({nome,short}).eq('id',id);
-  await loadWorkouts(); populateFilters();
-}
-
 async function addWorkout(){
   const nomeEl=document.getElementById('new-wkt-nome');
   const nome=nomeEl.value.trim();
@@ -1290,8 +1383,8 @@ async function addWorkout(){
 }
 
 async function deleteWorkout(id){
-  const w=workouts.find(x=>x.id===id);
-  if(!confirm(`Eliminare la scheda "${w?.nome}"?\nAttenzione: verranno eliminati anche tutti i suoi esercizi. Le sessioni già salvate rimarranno nello storico.`)) return;
+  const w=allWorkouts.find(x=>x.id===id);
+  if(!confirm(`Eliminare la scheda "${w?.nome}"?\nGli esercizi restano nel catalogo e lo storico delle sessioni rimane intatto.`)) return;
   const {error}=await sb.from('workouts').delete().eq('id',id);
   if(error){ alert('Errore: '+error.message); return; }
   await loadWorkouts(); await loadAllExercises(); populateFilters(); renderWorkoutsMgr();
@@ -1339,147 +1432,345 @@ async function addAthlete(){
 }
 
 // ── GESTIONE ESERCIZI ─────────────────────────────────────
-function renderExerciseEditor(){
-  const el=document.getElementById('ex-editor');
-  if(!workouts.length){ el.innerHTML='<div class="empty">Nessuna scheda — creane una in Impostazioni → Schede</div>'; return; }
+// ── PAGINA ESERCIZI (catalogo raggruppato) ────────────────
+function renderCatalog(){
+  const el=document.getElementById('ex-catalog');
+  if(!catalog.length){ el.innerHTML='<div class="empty">Nessun esercizio nel catalogo — aggiungine uno sotto</div>'; return; }
+  // Raggruppa per gruppo muscolare
+  const groups={};
+  catalog.forEach(e=>{
+    const g=e.gruppo_muscolare||'SENZA GRUPPO';
+    if(!groups[g]) groups[g]=[];
+    groups[g].push(e);
+  });
   let h='';
-  workouts.forEach(w=>{
-    const exList=getWorkoutExercises(w.id);
-    h+=`<div class="all-section">
-      <div class="all-section-head">
-        <span class="all-section-title">${w.short||w.nome.substring(0,3).toUpperCase()}</span>
-        <span style="font-size:.82rem;color:var(--text2)">${w.nome}</span>
-        <span style="font-size:.75rem;color:var(--text3);margin-left:auto">${exList.length} esercizi</span>
-      </div>
-      <div class="col-hdrs" style="grid-template-columns:28px 1fr 80px 80px 36px 36px">
-        <div class="col-h">#</div>
-        <div class="col-h" style="text-align:left">Nome esercizio</div>
-        <div class="col-h">Tempo</div><div class="col-h">Range</div>
-        <div class="col-h"></div><div class="col-h"></div>
+  Object.keys(groups).sort().forEach(g=>{
+    h+=`<div class="muscle-group">
+      <div class="muscle-group-head">
+        <span class="muscle-group-title">${g}</span>
+        <span class="muscle-group-count">${groups[g].length} esercizi</span>
       </div>`;
-    exList.forEach((ex,ei)=>{
-      h+=`<div class="ex-edit-row">
-        <span class="ex-pos">${ei+1}</span>
-        <input class="ex-inp" id="exn_${w.id}_${ei}" value="${ex.nome}" onchange="markDirty(${w.id},${ei})">
-        <input class="ex-inp-sm" id="ext_${w.id}_${ei}" value="${ex.tempo}" onchange="markDirty(${w.id},${ei})">
-        <input class="ex-inp-sm" id="exr_${w.id}_${ei}" value="${ex.range_rip}" onchange="markDirty(${w.id},${ei})">
-        <div class="ex-save-btn">
-          <button class="ex-save-icon" id="exbtn_${w.id}_${ei}" onclick="saveExercise(${w.id},${ei})" title="Salva">💾</button>
-        </div>
-        <div class="ex-save-btn" style="border-left:1px solid var(--border)">
-          <button class="ex-save-icon" onclick="deleteExercise(${w.id},${ei})" title="Elimina"
-            style="color:var(--text3)" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--text3)'">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-          </button>
-        </div>
+    groups[g].forEach(e=>{
+      h+=`<div class="cat-ex-row">
+        <input class="cat-ex-name" value="${e.nome}" onchange="renameCatalogExercise(${e.id},this.value)">
+        <button class="cat-ex-del" onclick="deleteCatalogExercise(${e.id},'${e.nome.replace(/'/g,"\\\\'")}')" title="Elimina dal catalogo">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        </button>
       </div>`;
     });
-    h+=`<div style="padding:10px 14px;border-top:1px solid var(--border);background:var(--bg3);display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <input id="new-ex-nome-${w.id}" class="ex-inp" style="flex:1;min-width:140px;border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:.85rem" placeholder="Nuovo esercizio...">
-      <input id="new-ex-tempo-${w.id}" class="ex-inp-sm" style="width:70px;border:1px solid var(--border);border-radius:6px;padding:7px 8px;text-align:center" placeholder="Tempo" value="3111">
-      <input id="new-ex-range-${w.id}" class="ex-inp-sm" style="width:70px;border:1px solid var(--border);border-radius:6px;padding:7px 8px;text-align:center" placeholder="Range" value="6-10">
-      <button class="btn btn-accent btn-sm" onclick="addExercise(${w.id})">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Aggiungi
-      </button>
-    </div></div>`;
+    h+=`</div>`;
   });
   el.innerHTML=h;
 }
 
-function markDirty(wid,ei){
-  const btn=document.getElementById(`exbtn_${wid}_${ei}`);
-  if(btn){ btn.textContent='💾'; btn.classList.remove('saved'); }
-}
-
-async function saveExercise(wid,ei){
-  const ex=(exercises[wid]||[])[ei];
-  if(!ex?.we_id) return;
-  const nome=document.getElementById(`exn_${wid}_${ei}`).value.trim().toUpperCase();
-  const tempo=document.getElementById(`ext_${wid}_${ei}`).value.trim();
-  const range=document.getElementById(`exr_${wid}_${ei}`).value.trim();
+async function renameCatalogExercise(id,val){
+  const nome=val.trim().toUpperCase();
   if(!nome) return;
-  const btn=document.getElementById(`exbtn_${wid}_${ei}`);
-  btn.textContent='…'; btn.style.opacity='.5';
-  try{
-    // 1. Aggiorna il nome nel catalogo (exercises) — se cambiato
-    if(nome!==ex.nome){
-      // Cerca se esiste già un esercizio con questo nome
-      const {data:existing}=await sb.from('exercises').select('id').eq('nome',nome).maybeSingle();
-      if(existing && existing.id!==ex.exercise_id){
-        // Esiste già: collega questa riga all'esercizio esistente
-        await sb.from('workout_exercises').update({exercise_id:existing.id}).eq('id',ex.we_id);
-        ex.exercise_id=existing.id;
-      } else {
-        // Rinomina l'esercizio nel catalogo (aggiorna ovunque sia usato)
-        await sb.from('exercises').update({nome}).eq('id',ex.exercise_id);
-      }
-    }
-    // 2. Aggiorna tempo/range nel collegamento (workout_exercises)
-    const {error}=await sb.from('workout_exercises')
-      .update({tempo,range_rip:range}).eq('id',ex.we_id);
-    if(error) throw error;
-    exercises[wid][ei]={...ex,nome,tempo,range_rip:range};
-    btn.textContent='✓'; btn.classList.add('saved'); btn.style.opacity='1';
-    setTimeout(()=>{ btn.textContent='💾'; btn.classList.remove('saved'); },2000);
-  } catch(e){
-    btn.textContent='⚠'; btn.style.opacity='1'; alert('Errore: '+e.message);
-  }
-}
-
-// Trova o crea un esercizio nel catalogo, ritorna il suo id
-async function getOrCreateExercise(nome){
-  const {data:existing}=await sb.from('exercises').select('id').eq('nome',nome).maybeSingle();
-  if(existing) return existing.id;
-  const {data,error}=await sb.from('exercises').insert({nome}).select('id').single();
-  if(error) throw error;
-  return data.id;
-}
-
-async function addExercise(wid){
-  const nomeEl=document.getElementById(`new-ex-nome-${wid}`);
-  const nome=nomeEl.value.trim().toUpperCase();
-  const tempo=document.getElementById(`new-ex-tempo-${wid}`).value.trim()||'3111';
-  const range=document.getElementById(`new-ex-range-${wid}`).value.trim()||'6-10';
-  if(!nome){ nomeEl.focus(); return; }
-  try{
-    const exId=await getOrCreateExercise(nome);
-    // Controlla che non sia già in questa scheda
-    const dup=(exercises[wid]||[]).find(e=>e.exercise_id===exId);
-    if(dup){ alert('Questo esercizio è già presente in questa scheda.'); return; }
-    const pos=(exercises[wid]||[]).length+1000+Date.now()%1000;
-    const {error}=await sb.from('workout_exercises')
-      .insert({workout_id:wid,exercise_id:exId,position:pos,tempo,range_rip:range});
-    if(error) throw error;
-    nomeEl.value='';
-    document.getElementById(`new-ex-tempo-${wid}`).value='3111';
-    document.getElementById(`new-ex-range-${wid}`).value='6-10';
-    await loadAllExercises();
-    await renumberPositions(wid);
-    renderExerciseEditor();
-  } catch(e){ alert('Errore: '+e.message); }
-}
-
-async function deleteExercise(wid,ei){
-  const ex=(exercises[wid]||[])[ei];
-  if(!ex?.we_id) return;
-  if(!confirm(`Rimuovere "${ex.nome}" da questa scheda?\nLo storico delle sessioni rimane intatto.`)) return;
-  // Rimuove solo il collegamento (workout_exercises), non l'esercizio dal catalogo
-  const {error}=await sb.from('workout_exercises').delete().eq('id',ex.we_id);
+  const {error}=await sb.from('exercises').update({nome}).eq('id',id);
   if(error){ alert('Errore: '+error.message); return; }
-  exercises[wid].splice(ei,1);
-  await renumberPositions(wid);
-  await loadAllExercises();
-  renderExerciseEditor();
+  await loadCatalog(); await loadAllExercises();
 }
 
-async function renumberPositions(wid){
-  const list=exercises[wid]||[];
-  // Rinumera le posizioni in workout_exercises (usa we_id)
-  await Promise.all(list.map((e,i)=>sb.from('workout_exercises').update({position:-(i+1)}).eq('id',e.we_id)));
-  await Promise.all(list.map((e,i)=>sb.from('workout_exercises').update({position:i}).eq('id',e.we_id)));
-  list.forEach((e,i)=>{ e.position=i; });
+async function addCatalogExercise(){
+  const nomeEl=document.getElementById('new-cat-nome');
+  const muscleEl=document.getElementById('new-cat-muscle');
+  const nome=nomeEl.value.trim().toUpperCase();
+  const muscle=muscleEl.value.trim().toUpperCase();
+  if(!nome){ nomeEl.focus(); return; }
+  closeAc('new-cat');
+  const {error}=await sb.from('exercises').insert({nome,gruppo_muscolare:muscle||null});
+  if(error){
+    if(error.message.includes('duplicate')) alert('Esiste già un esercizio con questo nome.');
+    else alert('Errore: '+error.message);
+    return;
+  }
+  nomeEl.value=''; muscleEl.value='';
+  await loadCatalog(); renderCatalog();
 }
+
+async function deleteCatalogExercise(id,nome){
+  // Controlla se è usato in qualche scheda
+  const {data:used}=await sb.from('workout_exercises').select('id').eq('exercise_id',id).limit(1);
+  if(used&&used.length){
+    alert(`"${nome}" è usato in almeno una scheda. Rimuovilo prima dalle schede.`);
+    return;
+  }
+  if(!confirm(`Eliminare "${nome}" dal catalogo?`)) return;
+  const {error}=await sb.from('exercises').delete().eq('id',id);
+  if(error){ alert('Errore: '+error.message); return; }
+  await loadCatalog(); renderCatalog();
+}
+
+// ── AUTOCOMPLETE gruppo muscolare ─────────────────────────
+function acMuscle(val,prefix){
+  const list=document.getElementById('ac-'+prefix);
+  if(!list) return;
+  const q=val.trim().toUpperCase();
+  const matches=muscleGroups.filter(g=>g.includes(q));
+  let items='';
+  matches.forEach(g=>{ items+=`<div class="ac-item" onclick="pickAc('${prefix}','${g.replace(/'/g,"\\\\'")}')">${g}</div>`; });
+  if(q && !muscleGroups.includes(q)){
+    items+=`<div class="ac-item" onclick="pickAc('${prefix}','${q.replace(/'/g,"\\\\'")}')">${q}<span class="ac-new">+ nuovo gruppo</span></div>`;
+  }
+  list.innerHTML=items;
+  list.classList.toggle('open', items.length>0);
+}
+function pickAc(prefix,val){
+  const inp=document.getElementById(prefix==='new-cat'?'new-cat-muscle':prefix+'-muscle');
+  if(inp) inp.value=val;
+  closeAc(prefix);
+}
+function closeAc(prefix){
+  const list=document.getElementById('ac-'+prefix);
+  if(list) list.classList.remove('open');
+}
+// Chiudi autocomplete cliccando fuori
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.ac-wrap')) document.querySelectorAll('.ac-list').forEach(l=>l.classList.remove('open'));
+});
+
+// ── PAGINA SCHEDE (lista) ─────────────────────────────────
+async function renderWorkoutsMgr(){
+  const el=document.getElementById('workouts-mgr-list');
+  await loadWorkouts(); await loadAllExercises();
+  if(!allWorkouts.length){ el.innerHTML='<div class="empty">Nessuna scheda — aggiungine una sotto</div>'; return; }
+  el.innerHTML=allWorkouts.map(w=>{
+    const exCount=getWorkoutExercises(w.id).length;
+    const inactive=w.active?'':' style="opacity:.55"';
+    return `<div class="wkt-card"${inactive}>
+      <div class="wkt-card-main" onclick="openWorkoutDetail(${w.id})">
+        <span class="wkt-card-badge">${w.short||w.nome.substring(0,3).toUpperCase()}</span>
+        <div class="wkt-card-info">
+          <div class="wkt-card-name">${w.nome}${w.active?'':' <span style="font-size:.7rem;color:var(--text3)">(inattiva)</span>'}</div>
+          <div class="wkt-card-sub">${exCount} esercizi</div>
+        </div>
+        <span class="wkt-card-arrow">›</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function saveWorkout(id){
+  const nome=document.getElementById(`wkt-nome-${id}`)?.value.trim();
+  const short=document.getElementById(`wkt-short-${id}`)?.value.trim()||'';
+  if(!nome) return;
+  await sb.from('workouts').update({nome,short}).eq('id',id);
+  await loadWorkouts(); populateFilters();
+}
+
+// ── DETTAGLIO SCHEDA (drag&drop, tempo, range, add/del) ───
+async function openWorkoutDetail(wid){
+  curWorkoutDetail=allWorkouts.find(w=>w.id===wid)||workouts.find(w=>w.id===wid);
+  if(!curWorkoutDetail) return;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-workout-detail').classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  closeSB();
+  await loadAllExercises();
+  renderWorkoutDetail();
+}
+
+function renderWorkoutDetail(){
+  const w=curWorkoutDetail;
+  const exList=getWorkoutExercises(w.id);
+  document.getElementById('wd-title').textContent=w.nome;
+  document.getElementById('wd-sub').textContent=`${w.short||''} · ${exList.length} esercizi · trascina per riordinare`;
+
+  let h='<div class="wd-ex-list" id="wd-ex-list">';
+  if(!exList.length){
+    h+='<div class="empty">Nessun esercizio — aggiungilo qui sotto</div>';
+  } else {
+    exList.forEach((ex,ei)=>{
+      h+=`<div class="wd-ex-row" draggable="true" data-idx="${ei}" data-weid="${ex.we_id}">
+        <div class="wd-drag-handle">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="6" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="6" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="18" r="1"/></svg>
+        </div>
+        <div class="wd-ex-info">
+          <div class="wd-ex-name">${ex.nome}</div>
+          <div class="wd-ex-muscle">${ex.muscle||'—'}</div>
+        </div>
+        <input class="wd-ex-inp" value="${ex.tempo}" placeholder="Tempo" onchange="updateWeField(${ex.we_id},'tempo',this.value)">
+        <input class="wd-ex-inp" value="${ex.range_rip}" placeholder="Range" onchange="updateWeField(${ex.we_id},'range_rip',this.value)">
+        <button class="wd-ex-del" onclick="removeFromWorkout(${ex.we_id})" title="Rimuovi">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        </button>
+      </div>`;
+    });
+  }
+  h+='</div>';
+
+  // Box aggiungi: prima gruppo muscolare, poi esercizio
+  h+=`<div class="wd-add-box">
+    <div class="wd-add-title">Aggiungi esercizio dalla scheda</div>
+    <div class="wd-add-row">
+      <select class="selx" id="wd-add-muscle" onchange="wdFilterExercises()" style="flex:1;min-width:140px">
+        <option value="">1. Gruppo muscolare...</option>
+      </select>
+      <select class="selx" id="wd-add-exercise" style="flex:1;min-width:160px">
+        <option value="">2. Esercizio...</option>
+      </select>
+      <input class="wd-ex-inp" id="wd-add-tempo" value="3111" placeholder="Tempo" style="width:70px;border:1px solid var(--border);border-radius:6px">
+      <input class="wd-ex-inp" id="wd-add-range" value="6-10" placeholder="Range" style="width:70px;border:1px solid var(--border);border-radius:6px">
+      <button class="btn btn-accent btn-sm" onclick="addExerciseToWorkout()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Aggiungi
+      </button>
+    </div>
+  </div>`;
+
+  document.getElementById('wd-body').innerHTML=h;
+
+  // Popola il select gruppi muscolari
+  const ms=document.getElementById('wd-add-muscle');
+  muscleGroups.forEach(g=>{
+    const o=document.createElement('option'); o.value=g; o.textContent=g; ms.appendChild(o);
+  });
+
+  initWdDragDrop();
+}
+
+function wdFilterExercises(){
+  const muscle=document.getElementById('wd-add-muscle').value;
+  const exSel=document.getElementById('wd-add-exercise');
+  [...exSel.options].forEach(o=>{ if(o.value) exSel.remove(o.index); });
+  const inWorkout=new Set(getWorkoutExercises(curWorkoutDetail.id).map(e=>e.exercise_id));
+  catalog.filter(e=>(!muscle||e.gruppo_muscolare===muscle)&&!inWorkout.has(e.id))
+    .forEach(e=>{
+      const o=document.createElement('option'); o.value=e.id; o.textContent=e.nome; exSel.appendChild(o);
+    });
+}
+
+async function addExerciseToWorkout(){
+  const exId=parseInt(document.getElementById('wd-add-exercise').value);
+  if(!exId){ alert('Seleziona un esercizio.'); return; }
+  const tempo=document.getElementById('wd-add-tempo').value.trim()||'3111';
+  const range=document.getElementById('wd-add-range').value.trim()||'6-10';
+  const pos=getWorkoutExercises(curWorkoutDetail.id).length;
+  const {error}=await sb.from('workout_exercises')
+    .insert({workout_id:curWorkoutDetail.id,exercise_id:exId,position:pos,tempo,range_rip:range});
+  if(error){ alert('Errore: '+error.message); return; }
+  await loadAllExercises();
+  renderWorkoutDetail();
+}
+
+async function updateWeField(weId,field,val){
+  const upd={}; upd[field]=val.trim();
+  await sb.from('workout_exercises').update(upd).eq('id',weId);
+  // aggiorna stato locale
+  const list=getWorkoutExercises(curWorkoutDetail.id);
+  const item=list.find(e=>e.we_id===weId);
+  if(item) item[field]=val.trim();
+}
+
+async function removeFromWorkout(weId){
+  const list=getWorkoutExercises(curWorkoutDetail.id);
+  const item=list.find(e=>e.we_id===weId);
+  if(!confirm(`Rimuovere "${item?.nome}" dalla scheda?\nLo storico rimane intatto.`)) return;
+  const {error}=await sb.from('workout_exercises').delete().eq('id',weId);
+  if(error){ alert('Errore: '+error.message); return; }
+  await loadAllExercises();
+  renderWorkoutDetail();
+}
+
+// Drag&drop esercizi nella scheda
+function initWdDragDrop(){
+  const rows=document.querySelectorAll('#wd-ex-list .wd-ex-row');
+  let dragEl=null;
+  rows.forEach(row=>{
+    row.addEventListener('dragstart',()=>{ dragEl=row; row.classList.add('dragging'); });
+    row.addEventListener('dragend',async ()=>{
+      row.classList.remove('dragging');
+      document.querySelectorAll('.wd-ex-row').forEach(r=>r.classList.remove('drag-over'));
+      await persistWdOrder();
+    });
+    row.addEventListener('dragover',e=>{
+      e.preventDefault();
+      const list=document.getElementById('wd-ex-list');
+      const after=getDragAfter(list,e.clientY);
+      if(after==null) list.appendChild(dragEl);
+      else list.insertBefore(dragEl,after);
+    });
+  });
+}
+function getDragAfter(container,y){
+  const els=[...container.querySelectorAll('.wd-ex-row:not(.dragging)')];
+  return els.reduce((closest,child)=>{
+    const box=child.getBoundingClientRect();
+    const offset=y-box.top-box.height/2;
+    if(offset<0&&offset>closest.offset) return {offset,element:child};
+    return closest;
+  },{offset:-Infinity}).element;
+}
+async function persistWdOrder(){
+  const rows=[...document.querySelectorAll('#wd-ex-list .wd-ex-row')];
+  const order=rows.map(r=>parseInt(r.dataset.weid));
+  // Negativi prima per evitare conflitti, poi posizioni finali
+  await Promise.all(order.map((weId,i)=>sb.from('workout_exercises').update({position:-(i+1)}).eq('id',weId)));
+  await Promise.all(order.map((weId,i)=>sb.from('workout_exercises').update({position:i}).eq('id',weId)));
+  await loadAllExercises();
+  renderWorkoutDetail();
+}
+
+// ── PAGINA ALLENAMENTO (attiva/disattiva + ordina schede) ─
+async function renderTraining(){
+  const el=document.getElementById('training-list');
+  await loadWorkouts();
+  if(!allWorkouts.length){ el.innerHTML='<div class="empty">Nessuna scheda — creane in Schede</div>'; return; }
+  el.innerHTML='<div id="tr-list">'+allWorkouts.map(w=>`
+    <div class="tr-wkt-row${w.active?'':' inactive'}" draggable="true" data-wid="${w.id}">
+      <div class="wd-drag-handle">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="6" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="6" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="18" r="1"/></svg>
+      </div>
+      <span class="tr-wkt-badge">${w.short||w.nome.substring(0,2).toUpperCase()}</span>
+      <span class="tr-wkt-name">${w.nome}</span>
+      <button class="tr-toggle${w.active?' on':''}" onclick="toggleWorkoutActive(${w.id},${!w.active})"></button>
+    </div>
+  `).join('')+'</div>';
+  initTrDragDrop();
+}
+
+async function toggleWorkoutActive(wid,active){
+  await sb.from('workouts').update({active}).eq('id',wid);
+  await loadWorkouts();
+  renderTraining();
+}
+
+function initTrDragDrop(){
+  const rows=document.querySelectorAll('#tr-list .tr-wkt-row');
+  let dragEl=null;
+  rows.forEach(row=>{
+    row.addEventListener('dragstart',()=>{ dragEl=row; row.classList.add('dragging'); });
+    row.addEventListener('dragend',async ()=>{
+      row.classList.remove('dragging');
+      await persistTrOrder();
+    });
+    row.addEventListener('dragover',e=>{
+      e.preventDefault();
+      const list=document.getElementById('tr-list');
+      const after=getTrDragAfter(list,e.clientY);
+      if(after==null) list.appendChild(dragEl);
+      else list.insertBefore(dragEl,after);
+    });
+  });
+}
+function getTrDragAfter(container,y){
+  const els=[...container.querySelectorAll('.tr-wkt-row:not(.dragging)')];
+  return els.reduce((closest,child)=>{
+    const box=child.getBoundingClientRect();
+    const offset=y-box.top-box.height/2;
+    if(offset<0&&offset>closest.offset) return {offset,element:child};
+    return closest;
+  },{offset:-Infinity}).element;
+}
+async function persistTrOrder(){
+  const rows=[...document.querySelectorAll('#tr-list .tr-wkt-row')];
+  const order=rows.map(r=>parseInt(r.dataset.wid));
+  await Promise.all(order.map((wid,i)=>sb.from('workouts').update({position:-(i+1)}).eq('id',wid)));
+  await Promise.all(order.map((wid,i)=>sb.from('workouts').update({position:i}).eq('id',wid)));
+  await loadWorkouts();
+  renderTraining();
+}
+
 
 // ── CHART ─────────────────────────────────────────────────
 function openChart(idx){
